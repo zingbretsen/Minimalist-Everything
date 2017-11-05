@@ -21,7 +21,7 @@
         "scripts": [
             "data/master.js",
             "background/util.js",
-            "background/Module.js",
+            "common/Module.js",
             "background/Database.js",
             "background/Updater.js",
             "background/Runtime.js",

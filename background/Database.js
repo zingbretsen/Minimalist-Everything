@@ -7,7 +7,7 @@ const KEY_UPDATED = "hasUpdated";
 
 class Database {
   constructor() {
-    this._preferences = new Map(["isEnabled", true]);
+    this._preferences = new Map([["isEnabled", true]]);
     this._db = null;
     this._modules = []
     this._reloadOnSave = false;

@@ -1,15 +1,16 @@
-var modules,
+let modules,
   preferences;
 
 /**
  * Initialize
  */
 chrome.extension.sendMessage({name: "getPreferences"}, (response) => {
-  if (typeof response === "undefined") {
-    setTimeout(() => window.location.reload(), 1000);
+  if (response === undefined) {
+    window.location.hash = "yo";
+    //setTimeout(() => window.location.reload(), 1000);
   }
 
-  preferences = response.preferences;
+  preferences = response;
   buildDashboard(true, () => {
     const hash = window.location.hash.replace(/^#/,"");
     if (hash.indexOf("new") > -1) {
@@ -122,7 +123,7 @@ function buildDashboard(andSwitch, callback) {
   console.debug("Loading Dashboard...");
 
   chrome.extension.sendMessage({name: "getAllModules"}, (response) => {
-    modules = response.modules.map(Module.factory);
+    modules = response.map(Module.factory);
 
     const $moduleControls = $(
       `<div class="module-control">

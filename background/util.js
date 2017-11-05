@@ -19,13 +19,13 @@ function toRegExp(wildcard) {
     case "(":
     case ")":
     case "]":
-      return `\\${el}`;
+      return `\\${char}`;
     case "\\":
       return "\\\\";
     case " ":
       return "";
     default:
-      return el;
+      return char;
   }})].join("");
 
     let tldRegExp = new RegExp("^(\\^(?:[^/]*)(?://)?(?:[^/]*))(\\\\\\.tld)((?:/.*)?)$");

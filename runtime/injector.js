@@ -16,10 +16,10 @@ let preferences,
 ;
 
 chrome.extension.sendMessage({name: "getPreferences"}, (response) => {
-  preferences = response.preferences;
+  preferences = response;
   if (preferences.get("isEnabled"))
     chrome.extension.sendMessage({name: "getActiveModules"}, (response) => {
-        modules = response.modules;
+        modules = response;
         if (modules.length > 0) {
           buildModules();
           injectHead();
@@ -113,8 +113,7 @@ function buildModules() {
       )]
     );
   }
-}
-headScripts = `\n    var _min = [${_min}];${headScripts}`;
+  headScripts = `\n    var _min = [${_min}];${headScripts}`;
 }
 
 /**

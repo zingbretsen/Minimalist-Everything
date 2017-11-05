@@ -102,7 +102,7 @@ let exportTimer,
 
   $("#exportAll").on("click", () =>
     chrome.extension.sendMessage({name: "getRawData"}, (response) => {
-        $("#dataField").val(response.data);
+        $("#dataField").val(response);
         $("#import span").text("Import");
         hideExportOptions();
       }
