@@ -8,10 +8,28 @@ div[class*="icon-"] {
     font-size: 14px;
 }
 
-html {
+.fa:before {
+  position: relative;
+  top: 1px;
+}
+.fa.fa-toggle-off:before {
+  top: 2px;
+}
+
+#activeModules span {
+  margin-top: 5px;
+}
+
+#new-module .fa {
+  top: 2px;
+  position: relative;
+  left: 32px;
+}
+
+html, body {
     color: #222;
     font-family: 'Roboto', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     -webkit-text-size-adjust: 100%;
     height: 100%;
 }

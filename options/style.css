@@ -195,7 +195,7 @@ body {
                 section > div,
                 .editor-row > div {
                     min-width: 380px;
-                    overflow: hidden;
+                    /*overflow: hidden;*/
                     -webkit-order: 2;
                 }
 
@@ -308,7 +308,7 @@ body {
 
     .module-control .button.group,
     #optionPreview .button.group {
-        margin: 0;
+        /* margin: 0; */
     }
 
     #module-list h4 {
@@ -561,6 +561,7 @@ header {
 
     #editor-css,
     #editor-js,
+    #editor-js-body,
     #editor-about {
         min-height: 400px;
         position: relative;

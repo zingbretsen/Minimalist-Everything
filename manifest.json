@@ -19,13 +19,12 @@
 
     "background": {
         "scripts": [
-            "node_modules/lodash/lodash.min.js",
             "data/master.js",
-            "lib/util.js",
-            "lib/Module.js",
-            "lib/Database.js",
-            "lib/Updater.js",
-            "lib/Runtime.js",
+            "background/util.js",
+            "background/Module.js",
+            "background/Database.js",
+            "background/Updater.js",
+            "background/Runtime.js",
             "background/script.js"
         ],
         "persistent": true
