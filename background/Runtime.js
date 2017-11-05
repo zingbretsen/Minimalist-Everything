@@ -1,3 +1,5 @@
+function tabs(windows) { return [].concat(...[].concat(...windows)); }
+
 class Runtime {
   constructor(db, updater) {
     this.db = db;
@@ -113,7 +115,7 @@ class Runtime {
           break;
 
         case "isEnabled":
-          sendResponse({isEnabled: this.db.getPreferences().isEnabled});
+          sendResponse({isEnabled: this.db.getPreferences().get("isEnabled")});
           break;
 
         case "save":
@@ -206,14 +208,13 @@ class Runtime {
       tabId: tab.id
     });
   }
-
   /**
    * Reload all tabs targetted by active modules
    */
   reloadAll() {
     console.debug("Reloading tabs targetted by all active modules...")
     chrome.windows.getAll({populate: true}, (windows) =>
-      windows.map(Object.values).map(Object.values) // windows -> window -> tab
+      windows.map(tabs)
         .filter((tab) => this.getTargetModules(tab.url, true).length > 0)
         .forEach(this.reload)
     )
@@ -232,7 +233,7 @@ class Runtime {
     else {
       console.debug(`Reloading tabs targeted by ${target}...`);
       chrome.windows.getAll({populate: true}, (windows) =>
-        windows.map(Object.values).map(Object.values)
+        windows.map(tabs)
           .filter((tab) => tab.url === target)
           .forEach((tab) =>
             chrome.tabs.update(tab.id, {url: tab.url, selected: target.selected}, null)

@@ -17,7 +17,7 @@ let preferences,
 
 chrome.extension.sendMessage({name: "getPreferences"}, (response) => {
   preferences = response.preferences;
-  if (preferences.isEnabled)
+  if (preferences.get("isEnabled"))
     chrome.extension.sendMessage({name: "getActiveModules"}, (response) => {
         modules = response.modules;
         if (modules.length > 0) {

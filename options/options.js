@@ -20,20 +20,9 @@ function buildOptions(moduleIndex) {
     const $input = $(`<input id="option-${i}" type="${option.type}">`).prop("checked", option.isEnabled),
       $label = $(`<label for="option-${i}"><div class="input">&#10003;</div>${option.description}</label>`);
 
-    // check if option belongs to tab
-    const optionTab = option.tab;
-    // create tab if it doesn't exist
-    if (!tabs.hasOwnProperty(optionTab))
-      tabs[optionTab] = {};
-
-    // check if option belongs to section
-    const optionSection = option.section;
-    // create section if it doesn't exist
-    if (!tabs[optionTab].hasOwnProperty(optionSection))
-      tabs[optionTab][optionSection] = [];
-
-    // add option to section or tab
-    tabs[optionTab][optionSection].push($input, $label);
+    const optionTab = tabs[option.tab] || (tabs[option.tab] = {});
+    const optionSection = optionTab[option.section] || (optionTab[option.section] = {});
+    optionSection.push($input, $label);
 
     // check if option has fields
     if (option.fields && option.fields.length > 0) {
@@ -45,7 +34,7 @@ function buildOptions(moduleIndex) {
 <input type="text" class="${option.fields[j].isColor ? "color" : ""}" value="${option.fields[j].val || ""}">
 </div>`));
       // add field to option
-      tabs[optionTab][optionSection].push($fields);
+      optionSection.push($fields);
     }
   });
 

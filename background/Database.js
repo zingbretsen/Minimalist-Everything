@@ -7,9 +7,7 @@ const KEY_UPDATED = "hasUpdated";
 
 class Database {
   constructor() {
-    this._preferences = {
-      isEnabled: true
-    };
+    this._preferences = new Map(["isEnabled", true]);
     this._db = null;
     this._modules = []
     this._reloadOnSave = false;
@@ -40,7 +38,7 @@ class Database {
 
   _saveLocalStorage() {
     console.debug("Saving preferences...");
-    this.getPreferences().entries().forEach(localStorage.setItem);
+    this._preferences.forEach((v,k) => localStorage.setItem(k,v));
     return Promise.resolve();
   }
 
@@ -70,9 +68,9 @@ class Database {
 
   _loadLocalStorage() {
     console.debug("Loading preferences...");
-    this._preferences.keys.forEach((option) => {
-      const stored = localStorage.getItem(option);
-      if (stored != null) this._preferences[option] = stored;
+    this._preferences.forEach((v,k) => {
+      const stored = localStorage.getItem(k);
+      if (stored != null) this._preferences.set(k, stored);
     });
     return Promise.resolve();
   }
@@ -214,7 +212,7 @@ class Database {
    */
   disable(index) {
     if (index < 0) {
-      this.getPreferences().isEnabled = false;
+      this._preferences.set("isEnabled",false);
       console.debug("Minimalist disabled");
     }
     else {
@@ -231,7 +229,7 @@ class Database {
    */
   enable(index) {
     if (index < 0) {
-      this.getPreferences().isEnabled = true;
+      this._preferences.set("isEnabled",true);
       console.debug("Minimalist enabled");
     }
     else {
