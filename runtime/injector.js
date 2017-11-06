@@ -11,15 +11,14 @@ let preferences,
   bodyScripts = "",
   headScripts = "",
   styles = "",
-  _min = [],
   lastCheck = null
 ;
 
 chrome.extension.sendMessage({name: "getPreferences"}, (response) => {
-  preferences = response;
-  if (preferences.get("isEnabled"))
+  preferences = response.preferences;
+  if (preferences.isEnabled)
     chrome.extension.sendMessage({name: "getActiveModules"}, (response) => {
-        modules = response;
+        modules = response.modules;
         if (modules.length > 0) {
           buildModules();
           injectHead();
@@ -77,6 +76,13 @@ function buildModules() {
   // loop through modules
   const options = [].concat(...modules.map((module) => module.options))
     .filter((option) => option.isEnabled);
+
+  const _min = options
+    .map((option) => (option.fields.map)
+      ? Object.assign(...(option.fields.map((field) => ({[field.name]: field.val}))))
+      : {}
+    ).map(JSON.stringify);
+
   styles += options
     .map((option) => option.head && option.head.css)
     .filter(Boolean)
@@ -86,20 +92,14 @@ function buildModules() {
   headScripts += options
     .map((option) => option.head && option.head.js)
     .filter(Boolean)
-    .map((scriptData) => scriptData.join("\n"))
-    .join("\n")
-    .replace(/_min\./g, `_min[${i}].`);
-
-  _min.push(JSON.stringify(Object.assign(
-    [].concat(...options.map((option) => option.fields))
-      .map((field) => ({[field.name]: field.val})))
-  ));
+    .map((scriptData, i) => scriptData.join("\n").replace(/_min\./g, `_min[${i}].`))
+    .join("\n");
 
   bodyScripts += options
     .map((option) => option.load && option.load.js)
     .filter(Boolean)
-    .join("\n")
-    .replace(/_min\./g, `_min[${i}].`);
+    .map((scriptData, i) => scriptData.join("\n").replace(/_min\./g, `_min[${i}].`))
+    .join("\n");
 
   while (styles.indexOf("_min.") !== -1) {
     styles = styles.replace(

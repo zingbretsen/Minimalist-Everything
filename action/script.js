@@ -12,7 +12,7 @@ $("body")
 $("#new-module").on("click", () => openOptions("new"));
 
 chrome.extension.sendMessage({name: "isEnabled"}, (response) => {
-  isEnabled = response;
+  isEnabled = response.isEnabled;
   $("#toggle-minimalist").removeClass("disabled");
   toggleButton(-1);
 });
@@ -24,9 +24,9 @@ chrome.tabs.getSelected(null, (tab) => {
     name: "getTargetModulesOfURL",
     url: tab.url
   }, (response) => {
-    modules = response;
-    chrome.extension.sendMessage({name: "getAllModules"}, (responseAll) => {
-      allModules = responseAll.map(Module.factory);
+    modules = response.modules;
+    chrome.extension.sendMessage({name: "getAllModules"}, (response) => {
+      allModules = response.modules.map(Module.factory);
       const el = $("#activeModules li")
       if (modules.length > 0)
         el.remove();
@@ -105,7 +105,7 @@ function toggle(target) {
   });
   if (target === -1)
     chrome.extension.sendMessage({name: "isEnabled"}, (response) => {
-      isEnabled = response;
+      isEnabled = response.isEnabled;
       toggleButton(-1);
       chrome.extension.sendMessage({
         name: "reload",
@@ -117,7 +117,7 @@ function toggle(target) {
       name: "getTargetModulesOfURL",
       url: url
     }, (response) => {
-      modules = response;
+      modules = response.modules;
       toggleButton(target);
       if (isEnabled || target === -1)
         chrome.extension.sendMessage({

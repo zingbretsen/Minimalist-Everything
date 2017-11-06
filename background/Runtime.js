@@ -40,9 +40,9 @@ class Runtime {
           break;
 
         case "getModuleIndex":
-          sendResponse(
-            this.db.getModuleIndex(request.meta.name, request.meta.author) > -1
-          );
+          sendResponse({
+            index: this.db.getModuleIndex(request.meta.name, request.meta.author) > -1
+          });
           break;
 
         case "disable":
@@ -56,31 +56,31 @@ class Runtime {
           break;
 
         case "getActiveModules":
-          sendResponse(this.getTargetModules(sender.tab.url, true));
+          sendResponse({modules: this.getTargetModules(sender.tab.url, true)});
           break;
 
         case "getAllModules":
-          sendResponse(this.db.getModules());
+          sendResponse({modules: this.db.getModules()});
           break;
 
         case "getGranularRawData":
           sendResponse({
-            "version": this.updater.version_package,
-            "preferences": this.db.getPreferences(),
-            "modules": this.db.getModules(),
+            version: this.updater.version_package,
+            preferences: this.db.getPreferences(),
+            modules: this.db.getModules(),
           });
           break;
 
         case "getPreferences":
-          sendResponse(this.db.getPreferences());
+          sendResponse({preferences: this.db.getPreferences()});
           break;
 
         case "getRawData":
-          sendResponse(this.db.getRawData());
+          sendResponse({data: this.db.getRawData()});
           break;
 
         case "getTargetModulesOfURL":
-          sendResponse(this.getTargetModules(request.url, false));
+          sendResponse({modules: this.getTargetModules(request.url, false)});
           break;
 
         case "updateCoreModulesModule":
@@ -115,7 +115,7 @@ class Runtime {
           break;
 
         case "isEnabled":
-          sendResponse(this.db.getPreferences().get("isEnabled"));
+          sendResponse({isEnabled: this.db.getPreferences().isEnabled});
           break;
 
         case "save":
