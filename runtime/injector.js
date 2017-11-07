@@ -77,9 +77,9 @@ function buildModules() {
   const options = [].concat(...modules.map((module) => module.options))
     .filter((option) => option.isEnabled);
 
-  const _min = options
-    .map((option) => (option.fields.map)
-      ? Object.assign(...(option.fields.map((field) => ({[field.name]: field.val}))))
+  const _min = options.map((option) =>
+      (option.fields.map)
+      ? Object.assign({}, ...(option.fields.map((field) => ({[field.name]: field.val}))))
       : {}
     ).map(JSON.stringify);
 
