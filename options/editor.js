@@ -409,11 +409,11 @@ function saveEdits(andSuppressReload) {
       option.tab = $("#optionTab").val();
       option.section = $("#optionSection").val();
       // loop through fields
-      option.fields = $("#page-edit .field-row").map((el, i) => ({
-        description: $(`.field-row:nth-child(${i + 1}) .field-description`).val(),
-          name: $(`.field-row:nth-child(${i + 1}) .field-variable`).val(),
-          val: $(`.field-row:nth-child(${i + 1}) .field-default`).val(),
-          isColor: $(`.field-row:nth-child(${i + 1}) .isColor`).is(":checked")
+      option.fields = $("#page-edit .field-row").get().map($).map(el => ({
+        description: el.find(".field-description").val(),
+        name: el.find(".field-variable").val(),
+        val: el.find(".field-default").val(),
+        isColor: el.find(".isColor").is(":checked")
       }));
 
       if ($("#optionPreview").attr("src") !== undefined)

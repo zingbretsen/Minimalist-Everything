@@ -20,8 +20,8 @@ function buildOptions(moduleIndex) {
     const $input = $(`<input id="option-${i}" type="${option.type}">`).prop("checked", option.isEnabled),
       $label = $(`<label for="option-${i}"><div class="input">&#10003;</div>${option.description}</label>`);
 
-    const optionTab = tabs[option.tab] || (tabs[option.tab] = {});
-    const optionSection = optionTab[option.section] || (optionTab[option.section] = {});
+    const optionTab = tabs[option.tab] || (tabs[option.tab] = []);
+    const optionSection = optionTab[option.section] || (optionTab[option.section] = []);
     optionSection.push($input, $label);
 
     // check if option has fields
