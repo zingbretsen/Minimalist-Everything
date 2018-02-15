@@ -30,8 +30,8 @@ function buildOptions(moduleIndex) {
       // loop through fields
       $fields.append(...option.fields.map((field) =>
         `<div class="option-${i} field-row">
-<label>${option.fields[j].description}: </label>
-<input type="text" class="${option.fields[j].isColor ? "color" : ""}" value="${option.fields[j].val || ""}">
+<label>${field.description}: </label>
+<input type="text" class="${field.isColor ? "color" : ""}" value="${field.val || ""}">
 </div>`));
       // add field to option
       optionSection.push($fields);
